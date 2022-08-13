@@ -1,0 +1,105 @@
+.css-units {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 0 4rem;
+
+  &-header {
+    text-align: center;
+    font-size: 3rem;
+    letter-spacing: 8px;
+    font-weight: 300;
+    color: rgb(125, 111, 196);
+    margin-top: 5rem;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .selection {
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding: 0.5rem;
+  }
+  .selection::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(125, 111, 196);
+    transition: 0.1s ease width;
+    border-radius: 2px;
+  }
+
+  /* FROM, TO */
+
+  .reverse-icon {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .from,
+  .to {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .from-input,
+  .to-input {
+    width: 100%;
+    height: 50px;
+    outline: 0;
+    border-radius: 7px;
+    border: 1px solid rgb(125, 111, 196);
+    padding: 0 1rem;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .to-input {
+    display: flex;
+    align-items: center;
+    color: rgb(82, 47, 255);
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 37.5rem) {
+  .wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .reverse-icon {
+      margin: 0;
+    }
+  }
+  .css-units {
+    padding: 0 1rem;
+
+    &-header {
+      font-size: 2rem;
+    }
+  }
+}
