@@ -29,7 +29,6 @@ function CssUnits() {
 
   return (
     <div className="css-units">
-      <Header />
       <h1 className="css-units-header">
         <b>{from.fromUnit}</b> TO <b>{to.toUnit}</b> CONVERTER
       </h1>
