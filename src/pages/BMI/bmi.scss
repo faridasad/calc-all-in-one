@@ -28,11 +28,11 @@
       justify-content: center;
       align-items: center;
       gap: 0.5rem;
+      user-select: none;
 
       .input-con {
         width: 100%;
-        height: 3rem;
-        font-size: 1.5rem;
+        height: 4rem;
         text-align: center;
         position: relative;
         border: 1px solid rgba(0, 0, 0, 0.5);
@@ -67,20 +67,33 @@
     }
 
     .result {
+      a {
+        font-size: .8rem;
+        opacity: .9;
+      }
       .output-con {
         width: 100%;
-        height: 3rem;
-        font-size: 2rem;
+        height: 4rem;
         position: relative;
         border: 1px solid rgba(0, 0, 0, 0.5);
         color: rgb(125, 111, 196);
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0.5rem 0;
+
+        .copy-text-badge {
+          font-weight: 400;
+          font-size: 0.9rem;
+          opacity: 0.7;
+          letter-spacing: 1px;
+        }
 
         .output {
           flex: 9;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          font-size: 2rem;
         }
         .button-reset {
           flex: 1;

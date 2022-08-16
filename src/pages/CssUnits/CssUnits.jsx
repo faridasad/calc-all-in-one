@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header/Header";
 import "./css_units.scss";
 
 function CssUnits() {
@@ -11,6 +10,7 @@ function CssUnits() {
     toInput: "",
     toUnit: "PIXELS",
   });
+  const [isCopied, setIsCopied] = useState(false)
 
   const handleReverse = () => {
     setFrom({ ...from, fromUnit: to.toUnit });
@@ -27,6 +27,14 @@ function CssUnits() {
       : setTo({ ...to, toInput: from.fromInput / 16 });
   }, [from]);
 
+  const copyText = () => {
+    navigator.clipboard.writeText(to.toInput)
+    setIsCopied(true)
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 2000)
+  }
+
   return (
     <div className="css-units">
       <h1 className="css-units-header">
@@ -34,19 +42,30 @@ function CssUnits() {
       </h1>
       <div className="wrapper">
         <div className="from">
-          <span className={"selection"}>{from.fromUnit}</span>
-          <input
-            type="number"
-            className="from-input"
-            onChange={(e) => handleInput(e)}
-          />
+          <label htmlFor="from-input" className={"selection"}>
+            {from.fromUnit}
+          </label>
+          <div className="from-input">
+            <input
+              type="number"
+              id="from-input"
+              onChange={(e) => handleInput(e)}
+            />
+            <label htmlFor="from-input" className="span-unit">{from.fromUnit}</label>
+          </div>
         </div>
         <div className="reverse-icon">
           <ion-icon name="repeat-outline" onClick={handleReverse}></ion-icon>
         </div>
         <div className="to">
           <span className={"selection"}>{to.toUnit}</span>
-          <div className="to-input">{to.toInput !== 0 && to.toInput}</div>
+          <div className="to-input">
+            <div onClick={() => copyText()}>
+              <p>{to.toInput !== 0 && to.toInput}</p>
+              <span>{isCopied ? "Copied!" : "Click to copy"}</span>
+            </div>
+            <span className="span-unit">{to.toUnit}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -1,26 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
 import "./bmi.scss";
 
 function Bmi() {
-  const output = useRef();
   const [userInfo, setUserInfo] = useState({
     weight: 0,
     height: 0,
+    result: 0,
   });
-  // const [error, setError] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
-    let result = (
+    let outputText = (
       Math.round(
         (userInfo.weight / (userInfo.height * userInfo.height)) * 100
       ) / 100
     ).toFixed(2);
 
-    isNaN(result) || !isFinite(result)
-      ? (output.current.textContent = "")
-      : (output.current.textContent = result);
+    isNaN(outputText) || !isFinite(outputText)
+      ? setUserInfo({ ...userInfo, result: "" })
+      : setUserInfo({ ...userInfo, result: outputText });
   }, [userInfo.height, userInfo.weight]);
+
+  const copyText = () => {
+    navigator.clipboard.writeText(userInfo.result);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 2000)
+  };
 
   return (
     <div className="bmi">
@@ -58,8 +66,11 @@ function Bmi() {
         </div>
         <div className="result">
           <div className="p">Your BMI</div>
-          <div className="output-con">
-            <div className="output" ref={output}></div>
+          <div className="output-con" onClick={() => copyText()}>
+            <p className="output">{userInfo.result}</p>
+            {userInfo.result && <span className="copy-text-badge">
+                {isCopied ? "Copied!" : "Click to copy"}
+              </span>}
             <button
               className="button-reset"
               onClick={() => setUserInfo({ weight: 0, height: 0 })}
@@ -67,6 +78,7 @@ function Bmi() {
               Reset
             </button>
           </div>
+          <a href="https://en.wikipedia.org/wiki/Body_mass_index" target="_blank"><i>Learn more about Body Mass Index from here &#8594;</i></a>
         </div>
       </div>
     </div>
