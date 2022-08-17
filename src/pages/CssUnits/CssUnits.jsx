@@ -10,7 +10,7 @@ function CssUnits() {
     toInput: "",
     toUnit: "PIXELS",
   });
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleReverse = () => {
     setFrom({ ...from, fromUnit: to.toUnit });
@@ -22,18 +22,23 @@ function CssUnits() {
   };
 
   useEffect(() => {
-    from.fromUnit === "REM"
+    from.fromUnit === "REM" || from.fromUnit === "EM"
       ? setTo({ ...to, toInput: from.fromInput * 16 })
       : setTo({ ...to, toInput: from.fromInput / 16 });
   }, [from]);
 
   const copyText = () => {
-    navigator.clipboard.writeText(to.toInput)
-    setIsCopied(true)
+    navigator.clipboard.writeText(to.toInput);
+    setIsCopied(true);
     setTimeout(() => {
-      setIsCopied(false)
-    }, 2000)
-  }
+      setIsCopied(false);
+    }, 2000);
+  };
+
+  const selectUnit = (e) => {
+    from.fromUnit === "PIXELS" && handleReverse();
+    setFrom({ ...from, fromUnit: e.target.dataset.value });
+  };
 
   return (
     <div className="css-units">
@@ -42,27 +47,58 @@ function CssUnits() {
       </h1>
       <div className="wrapper">
         <div className="from">
-          <label htmlFor="from-input" className={"selection"}>
-            {from.fromUnit}
-          </label>
+          <div className="selections">
+            <label
+              htmlFor="from-input"
+              data-value="REM"
+              className={
+                "selection " +
+                (from.fromUnit === "REM" || to.toUnit === "REM" ? "active" : "")
+              }
+              onClick={(e) => {
+                selectUnit(e);
+              }}
+            >
+              {to.toUnit === "REM" ? "PIXELS" : "REM"}
+            </label>
+            <label
+              htmlFor="from-input"
+              data-value="EM"
+              className={
+                "selection " +
+                (from.fromUnit === "EM" || to.toUnit === "EM" ? "active" : "")
+              }
+              onClick={(e) => {
+                selectUnit(e);
+              }}
+            >
+              {to.toUnit === "EM" ? "PIXELS" : "EM"}
+            </label>
+          </div>
           <div className="from-input">
             <input
               type="number"
               id="from-input"
               onChange={(e) => handleInput(e)}
             />
-            <label htmlFor="from-input" className="span-unit">{from.fromUnit}</label>
+            <label htmlFor="from-input" className="span-unit">
+              {from.fromUnit}
+            </label>
           </div>
         </div>
         <div className="reverse-icon">
           <ion-icon name="repeat-outline" onClick={handleReverse}></ion-icon>
         </div>
         <div className="to">
-          <span className={"selection"}>{to.toUnit}</span>
+          <div className="selections">
+            <span className="selection active">{to.toUnit}</span>
+          </div>
           <div className="to-input">
             <div onClick={() => copyText()}>
               <p>{to.toInput !== 0 && to.toInput}</p>
-              <span>{isCopied ? "Copied!" : "Click to copy"}</span>
+              {to.toInput !== 0 && (
+                <span>{isCopied ? "Copied!" : "Click to copy"}</span>
+              )}
             </div>
             <span className="span-unit">{to.toUnit}</span>
           </div>

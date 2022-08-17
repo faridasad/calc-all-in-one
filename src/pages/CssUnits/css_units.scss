@@ -34,11 +34,25 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 0%;
     height: 2px;
     background-color: rgb(125, 111, 196);
     transition: 0.1s ease width;
     border-radius: 2px;
+  }
+  .selection:hover::before {
+    width: 100%;
+  }
+  .selection.active::before {
+    width: 100%;
+  }
+  
+
+  .selections {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
   }
 
   /* FROM, TO */
