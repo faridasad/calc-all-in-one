@@ -6,7 +6,7 @@ function Header() {
   return (
     <header>
       <Link to="/">
-        <h1>calc(all[one])</h1>
+        <img src="images/logo.svg" alt="logo" />
       </Link>
       <button>Primary Button</button>
     </header>
